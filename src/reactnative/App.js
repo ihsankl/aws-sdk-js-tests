@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-
-import { getV2BrowserResponse, getV3BrowserResponse } from "../shared/utils";
+import { Sha256 } from "@aws-crypto/sha256-browser";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -13,28 +12,22 @@ const instructions = Platform.select({
 export default class App extends Component {
   constructor() {
     super();
-    this.state = { v2Response: "", v3Response: "" };
+    this.state = { sha256: "" };
   }
 
   async componentDidMount() {
-    const v2Response = await getV2BrowserResponse();
-    const v3Response = await getV3BrowserResponse();
-
+    const hasher = new Sha256();
+    hasher.update("{}");
+    const hash = await hasher.digest();
     this.setState({
-      v2Response: JSON.stringify(v2Response, null, 2),
-      v3Response: JSON.stringify(v3Response, null, 2)
+      sha256: hash
     });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.content}>
-          v2 response: {this.state.v2Response}!
-        </Text>
-        <Text style={styles.content}>
-          v3 response: {this.state.v3Response}!
-        </Text>
+        <Text style={styles.content}>hash: {this.state.sha256}!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
