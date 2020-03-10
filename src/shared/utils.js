@@ -1,5 +1,4 @@
 const AWS = require("aws-sdk");
-
 const {
   fromCognitoIdentityPool
 } = require("@aws-sdk/credential-provider-cognito-identity");
@@ -24,7 +23,6 @@ const getV2BrowserResponse = async () => {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: IDENTITY_POOL_ID
   });
-
   return getV2Response({ region: REGION });
 };
 
