@@ -24,7 +24,7 @@
     "lint-staged": ">=10.0.7",
     "nodemon": "^2.0.2",
     "prettier": "1.19.1",
-    "webpack": "^4.42.0",
+    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.3"
   },
@@ -37,9 +37,13 @@
     "*.{js,css,json,md}": "prettier --write"
   },
   "dependencies": {
-    "@aws-sdk/client-cognito-identity": "^1.0.0-alpha.20",
-    "@aws-sdk/client-dynamodb": "^1.0.0-alpha.20",
-    "@aws-sdk/credential-provider-cognito-identity": "^1.0.0-alpha.18",
+    "@aws-crypto/sha256-browser": "^1.0.0-alpha.0",
+    "@aws-crypto/sha256-js": "^1.0.0-alpha.0",
+    "@aws-sdk/client-cognito-identity": "^1.0.0-beta.1",
+    "@aws-sdk/client-dynamodb": "^1.0.0-beta.1",
+    "@aws-sdk/client-rekognition": "^1.0.0-beta.1",
+    "@aws-sdk/client-s3": "^1.0.0-beta.1",
+    "@aws-sdk/credential-provider-cognito-identity": "^1.0.0-beta.1",
     "aws-sdk": "^2.612.0",
     "expo": "~36.0.0",
     "react": "~16.9.0",
