@@ -4,18 +4,24 @@ const {
   fromCognitoIdentityPool
 } = require("@aws-sdk/credential-provider-cognito-identity");
 const { CognitoIdentityClient } = require("@aws-sdk/client-cognito-identity");
-const { DynamoDB } = require("@aws-sdk/client-dynamodb");
+const { S3 } = require("@aws-sdk/client-s3");
 
 const { REGION, IDENTITY_POOL_ID } = require("./config");
 
+const params = {
+  Bucket: "js-sdk-test-bucket",
+  Key: "file with space.txt",
+  Body: "abc"
+};
+
 const getV2Response = async clientParams => {
-  const client = new AWS.DynamoDB(clientParams);
-  return client.listTables().promise();
+  const client = new AWS.S3(clientParams);
+  return client.putObject(params).promise();
 };
 
 const getV3Response = async clientParams => {
-  const client = new DynamoDB(clientParams);
-  return client.listTables({});
+  const client = new S3(clientParams);
+  return client.putObject(params);
 };
 
 const getV2BrowserResponse = async () => {
