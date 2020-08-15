@@ -1,21 +1,37 @@
 const AWS = require("aws-sdk");
+const PinpointV2Client = require("aws-sdk/clients/pinpoint");
 
 const {
   fromCognitoIdentityPool,
 } = require("@aws-sdk/credential-provider-cognito-identity");
 const { CognitoIdentityClient } = require("@aws-sdk/client-cognito-identity");
-const { DynamoDB } = require("@aws-sdk/client-dynamodb");
+const { Pinpoint } = require("@aws-sdk/client-pinpoint");
 
 const { REGION, IDENTITY_POOL_ID } = require("./config");
 
 const getV2Response = async (clientParams) => {
-  const client = new AWS.DynamoDB(clientParams);
-  return client.listTables().promise();
+  const client = new PinpointV2Client(clientParams);
+  return client.getApps().promise();
 };
 
 const getV3Response = async (clientParams) => {
-  const client = new DynamoDB(clientParams);
-  return client.listTables({});
+  const client = new Pinpoint(clientParams);
+
+  /***Comment out this block to workaround the CORS issue on client side */
+  // client.middlewareStack.addRelativeTo(
+  //   (next) => (args) => {
+  //     delete args.request.headers["amz-sdk-invocation-id"];
+  //     delete args.request.headers["amz-sdk-request"];
+  //     return next(args);
+  //   },
+  //   {
+  //     step: "finalizeRequest",
+  //     relation: "after",
+  //     toMiddleware: "retryMiddleware",
+  //   }
+  // );
+
+  return client.getApps({});
 };
 
 const getV2BrowserResponse = async () => {
