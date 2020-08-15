@@ -20,29 +20,24 @@ Code Sample for testing AWS JS SDK
     - The policy should be specific to the operations you want to test
   - Update the IDENTITY_POOL_ID in [`src/shared/config.js`](./src/shared/config.js)
 
-## Example test for data returned by DynamoDB client:
+## Validate Pintpoint client:
 
-- Checkout master branch: `git checkout master`
+- Checkout master branch: `git checkout retry-headers-cors`
 - Run `yarn` to install dependencies
-
-### Node.js:
-
-- Run `yarn start:node` to run both v2 and v3 clients in Node.js
-- The responses returned by clients will be printed in console, and will re-run when code is updated.
-- The file being run is at [`src/node/index.js`](./src/node/index.js)
 
 ### Browser:
 
 - Run `yarn start:browser` to start webpack-dev-server with HMR
 - The bundle will be opened in default browser, and get refreshed when code is updated.
 - The file being run is at [`src/browser/index.js`](./src/browser/index.js)
-
-### React Native:
-
-- Run `yarn start:react-native` to start local development server of Expo CLI
-- The Expo Dev Tools will open in default browser with an option to run iOS simulator, Android device/emulator etc.
-- The react-native app in simulator/emulator/web will refresh when code is updated.
-- The file being run is at [`src/reactnative/App.js`](./src/reactnative/App.js)
+- Open browser's dev tool and find the error shown in the console:
+  ```
+  Access to fetch at ... has been blocked by CORS policy: Request header field
+  amz-sdk-invocation-id is not allowed by Access-Control-Allow-Headers in preflight response.
+  ```
+- Open [`src/browser/index.js`](./src/browser/index.js) and uncomment the highlighted
+  code scope and refresh the page. It will show the expected behavior if the issue
+  is fixed from server-side.
 
 ## License
 
